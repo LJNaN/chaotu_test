@@ -5,7 +5,7 @@
 <script setup>
 //根据图片生成画布
 function handle() {
-  const dom = document.getElementsByClassName('cesium-widget')[0].children[0]
+  const dom = GLOBAL.viewer.scene.canvas
   const domBase64 = dom.toDataURL()
 
   const image = new Image();

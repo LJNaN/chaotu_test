@@ -1,12 +1,16 @@
 <template>
   <div class="home">
     <div ref="cesiumContainer" style="width: 100%; height: 100%;"></div>
+    <div id="popupContainer" style=" position: absolute; transform: translate(-50%, -50%);"></div>
     <div class="btn">
       <PrintScreen></PrintScreen>
       <Terrain></Terrain>
       <S3DTile></S3DTile>
       <Filter></Filter>
       <PointCloud></PointCloud>
+      <!-- <Layer></Layer> -->
+      <Pipeline></Pipeline>
+      <PickPosition></PickPosition>
     </div>
   </div>
 </template>
@@ -19,6 +23,9 @@ import Terrain from '@/components/Terrain.vue'
 import S3DTile from '@/components/3DTile.vue'
 import Filter from '@/components/Filter.vue'
 import PointCloud from '@/components/PointCloud.vue'
+import Layer from '@/components/Layer.vue'
+import Pipeline from '@/components/Pipeline.vue'
+import PickPosition from '@/components/PickPosition.vue'
 const cesiumContainer = ref(null)
 
 onMounted(() => {
@@ -41,6 +48,7 @@ function init() {
     mapStyle: Cesium.BingMapsStyle.AERIAL,
     key: "AuKafWS8lQnTHXRdIBE7lyieYesaFPqSshgjjzyzPq9-Su7aQ_lu0MVEdoxvcQpO"
   }))
+  GLOBAL.viewer.scene.lightSource.ambientLightColor = new Cesium.Color(0.65, 0.65, 0.65, 1);
 }
 
 function setFilter() {
