@@ -1,12 +1,11 @@
 <template>
-  <el-button class="print-btn" @click="convertImageToCanvas">截图</el-button>
+  <el-button @click="handle">截图</el-button>
 </template>
 
 <script setup>
 //根据图片生成画布
-function convertImageToCanvas() {
+function handle() {
   const dom = document.getElementsByClassName('cesium-widget')[0].children[0]
-  console.log('dom: ', dom);
   const domBase64 = dom.toDataURL()
 
   const image = new Image();
@@ -22,10 +21,4 @@ function convertImageToCanvas() {
 
 </script>
 
-<style lang="less" scoped>
-.print-btn {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-</style>
+<style lang="less" scoped></style>

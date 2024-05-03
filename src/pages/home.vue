@@ -1,7 +1,13 @@
 <template>
   <div class="home">
-    <div ref="cesiumContainer"></div>
-    <PrintScreen></PrintScreen>
+    <div ref="cesiumContainer" style="width: 100%; height: 100%;"></div>
+    <div class="btn">
+      <PrintScreen></PrintScreen>
+      <Terrain></Terrain>
+      <S3DTile></S3DTile>
+      <Filter></Filter>
+      <PointCloud></PointCloud>
+    </div>
   </div>
 </template>
 
@@ -9,16 +15,21 @@
 import { onMounted, ref } from 'vue';
 import GLOBAL from '@/GLOBAL.js'
 import PrintScreen from '@/components/PrintScreen.vue'
+import Terrain from '@/components/Terrain.vue'
+import S3DTile from '@/components/3DTile.vue'
+import Filter from '@/components/Filter.vue'
+import PointCloud from '@/components/PointCloud.vue'
 const cesiumContainer = ref(null)
 
 onMounted(() => {
   init()
-  setFilter()
-  setBloom()
+  // setFilter()
+  // setBloom()
 })
 
 function init() {
   GLOBAL.viewer = new Cesium.Viewer(cesiumContainer.value, {
+    infoBox: false,
     contextOptions: {
       webgl: {
         preserveDrawingBuffer: true
@@ -46,8 +57,6 @@ function setBloom() {
   GLOBAL.viewer.scene.bloomEffect.bloomIntensity = 0.5;
 }
 
-
-
 </script>
 
 <style lang="less" scoped>
@@ -56,5 +65,11 @@ function setBloom() {
   width: 100vw;
   height: 100vh;
   background-color: antiquewhite;
+}
+
+.btn {
+  position: absolute;
+  top: 0;
+  display: flex;
 }
 </style>
