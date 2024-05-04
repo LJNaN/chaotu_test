@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <div ref="cesiumContainer" style="width: 100%; height: 100%;"></div>
-    <div id="popupContainer" style=""></div>
-    <div class="btn">
+    <div v-show="!GLOBAL.show2D.value" ref="cesiumContainer" style="width: 100%; height: 100%;"></div>
+    <div v-show="!GLOBAL.show2D.value" id="popupContainer"></div>
+    <div v-show="!GLOBAL.show2D.value" class="btn">
       <PrintScreen></PrintScreen>
       <Terrain></Terrain>
       <S3DTile></S3DTile>
@@ -11,6 +11,11 @@
       <!-- <Layer></Layer> -->
       <Pipeline></Pipeline>
       <PickPosition></PickPosition>
+      <OpenLayers></OpenLayers>
+    </div>
+
+    <div v-show="GLOBAL.show2D.value" id="map2D" style="position:absolute;width: 100%; height: 100%;top: 0;left: 0;">
+      <el-button @click="to3D" style="position: absolute; top: 10px;left: 50px; z-index: 2;">返回三维地图</el-button>
     </div>
   </div>
 </template>
@@ -26,6 +31,7 @@ import PointCloud from '@/components/PointCloud.vue'
 import Layer from '@/components/Layer.vue'
 import Pipeline from '@/components/Pipeline.vue'
 import PickPosition from '@/components/PickPosition.vue'
+import OpenLayers from '@/components/OpenLayers.vue'
 const cesiumContainer = ref(null)
 
 onMounted(() => {
@@ -65,6 +71,10 @@ function setBloom() {
   GLOBAL.viewer.scene.bloomEffect.bloomIntensity = 0.5;
 }
 
+function to3D() {
+  GLOBAL.show2D.value = false
+}
+
 </script>
 
 <style lang="less" scoped>
@@ -77,7 +87,7 @@ function setBloom() {
 
 .btn {
   position: absolute;
-  top: 0;
+  top: 10px;
   display: flex;
 }
 </style>
