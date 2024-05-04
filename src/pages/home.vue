@@ -12,6 +12,7 @@
       <Pipeline></Pipeline>
       <PickPosition></PickPosition>
       <OpenLayers></OpenLayers>
+      <Rain></Rain>
     </div>
 
     <div v-show="GLOBAL.show2D.value" id="map2D" style="position:absolute;width: 100%; height: 100%;top: 0;left: 0;">
@@ -32,6 +33,7 @@ import Layer from '@/components/Layer.vue'
 import Pipeline from '@/components/Pipeline.vue'
 import PickPosition from '@/components/PickPosition.vue'
 import OpenLayers from '@/components/OpenLayers.vue'
+import Rain from '@/components/Rain.vue'
 const cesiumContainer = ref(null)
 
 onMounted(() => {
