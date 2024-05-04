@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div ref="cesiumContainer" style="width: 100%; height: 100%;"></div>
-    <div id="popupContainer" style=" position: absolute; transform: translate(-50%, -50%);"></div>
+    <div id="popupContainer" style=""></div>
     <div class="btn">
       <PrintScreen></PrintScreen>
       <Terrain></Terrain>

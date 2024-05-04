@@ -9,8 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supermap/iclient-ol": "^11.1.1",
     "element-plus": "^2.7.2",
     "less": "^4.2.0",
+    "ol": "^9.1.0",
     "vue": "^3.4.21"
   },
   "devDependencies": {

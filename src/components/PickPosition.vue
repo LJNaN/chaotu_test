@@ -19,20 +19,7 @@ function init() {
 function handle() {
   const handler = new Cesium.ScreenSpaceEventHandler(GLOBAL.viewer.scene.canvas);
 
-  // 弹窗
-  const popup = new Popup({
-    viewer: GLOBAL.viewer,
-    element: document.getElementById('popupContainer'),
-    pixelOffset: new Cesium.Cartesian2(0, -120),
-    translucencyByDistance: new Cesium.NearFarScalar(0, 1, 17000000, 0.5),
-    distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 22000000),
-    showClose: true,
-    html: `
-      <div style="position:relative; background: #00aaaa; width: 200px; height: 150px;padding: 12px">
-        <p style="color: white;">asfdfas</p>
-      </div>
-    `
-  });
+
 
   //设置鼠标左键单击回调事件
   handler.setInputAction(function (e) {
@@ -54,13 +41,28 @@ function handle() {
     //在点击位置添加对应点
     GLOBAL.viewer.entities.add(new Cesium.Entity({
       point: new Cesium.PointGraphics({
-        color: new Cesium.Color(1, 1, 0),
+        color: new Cesium.Color(0.16, 0.62, 0.75),
         pixelSize: 15,
-        outlineColor: new Cesium.Color(0, 1, 1)
+        outlineColor: new Cesium.Color(1, 1, 1)
       }),
       position: Cesium.Cartesian3.fromDegrees(longitude, latitude, height + 1)
     }));
 
+    // 弹窗
+    const popup = new Popup({
+      viewer: GLOBAL.viewer,
+      pixelOffset: new Cesium.Cartesian2(0, -90),
+      translucencyByDistance: new Cesium.NearFarScalar(0, 1, 17000000, 0.5),
+      distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 22000000),
+      showClose: true,
+      html: `
+      <div style="position:relative; background: url('/img/1.png') center / 100% 100% no-repeat; width: 200px; height: 150px;padding: 12px">
+        <p style="color: white; font-size: 12px;">经度: ${longitude}</p>
+        <p style="color: white; font-size: 12px;">纬度: ${latitude}</p>
+        <p style="color: white; font-size: 12px;">高度: ${height}</p>
+      </div>
+    `
+    });
     popup.setPosition(position)
   }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 }
