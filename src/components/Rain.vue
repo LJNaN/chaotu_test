@@ -73,41 +73,51 @@ async function handle() {
     }
   })
 
-  const model = await scene.open(URL_CONFIG.SCENE_CBD_RIAN_SNOW);
-  groundLayer = model[2];
-  buildingLayer = model[3];
+  if (buildingLayer && groundLayer) {
+    setPBRMaterial()
+
+  } else {
+    const model = await scene.open(URL_CONFIG.SCENE_CBD_RIAN_SNOW)
+    groundLayer = model[2];
+    buildingLayer = model[3];
 
 
-  if (type.value === '晴') {
+    setPBRMaterial()
+  }
 
-  } else if (type.value === '雨') {
-    groundLayer.setPBRMaterialFromJSON("/examples/webgl/SampleData/pbr/MaterialJson/rain_.json");
-    buildingLayer.setPBRMaterialFromJSON("/examples/webgl/SampleData/pbr/MaterialJson/rain_.json");
-    let recordRain = 0;
-    let intervalValue = setInterval(() => {
-      if (groundLayer._PBRMaterialParams.pbrMetallicRoughness.rainEffect !== undefined && buildingLayer._PBRMaterialParams.pbrMetallicRoughness.rainEffect !== undefined) {
-        if (recordRain === 0) {
-          recordRain = 1;
+  function setPBRMaterial() {
+    if (type.value === '晴') {
+
+    } else if (type.value === '雨') {
+
+      groundLayer.setPBRMaterialFromJSON("/examples/webgl/SampleData/pbr/MaterialJson/rain_.json");
+      buildingLayer.setPBRMaterialFromJSON("/examples/webgl/SampleData/pbr/MaterialJson/rain_.json");
+      let recordRain = 0;
+      let intervalValue = setInterval(() => {
+        if (groundLayer._PBRMaterialParams.pbrMetallicRoughness.rainEffect !== undefined && buildingLayer._PBRMaterialParams.pbrMetallicRoughness.rainEffect !== undefined) {
+          if (recordRain === 0) {
+            recordRain = 1;
+          }
+          groundLayer._PBRMaterialParams.pbrMetallicRoughness.rainEffect.wetnessFactor += 0.0005;
+          buildingLayer._PBRMaterialParams.pbrMetallicRoughness.rainEffect.wetnessFactor += 0.0005;
         }
-        groundLayer._PBRMaterialParams.pbrMetallicRoughness.rainEffect.wetnessFactor += 0.0005;
-        buildingLayer._PBRMaterialParams.pbrMetallicRoughness.rainEffect.wetnessFactor += 0.0005;
-      }
-      if (buildingLayer._PBRMaterialParams.pbrMetallicRoughness.rainEffect !== undefined && buildingLayer._PBRMaterialParams.pbrMetallicRoughness.rainEffect.wetnessFactor - 0.85 > 0)
-        clearInterval(intervalValue);
-    }, 40)
+        if (buildingLayer._PBRMaterialParams.pbrMetallicRoughness.rainEffect !== undefined && buildingLayer._PBRMaterialParams.pbrMetallicRoughness.rainEffect.wetnessFactor - 0.85 > 0)
+          clearInterval(intervalValue);
+      }, 40)
 
-  } else if (type.value === '雪') {
-    groundLayer.setPBRMaterialFromJSON("/examples/webgl/SampleData/pbr/MaterialJson/M_Brick_Clay_Old_.json");
-    buildingLayer.setPBRMaterialFromJSON("/examples/webgl/SampleData/pbr/MaterialJson/M_Brick_Clay_Old_.json");
+    } else if (type.value === '雪') {
+      groundLayer.setPBRMaterialFromJSON("/examples/webgl/SampleData/pbr/MaterialJson/M_Brick_Clay_Old_.json");
+      buildingLayer.setPBRMaterialFromJSON("/examples/webgl/SampleData/pbr/MaterialJson/M_Brick_Clay_Old_.json");
 
-    let intervalValue = setInterval(() => {
-      if (buildingLayer._PBRMaterialParams.pbrMetallicRoughness.snowEffect !== undefined) {
-        buildingLayer._PBRMaterialParams.pbrMetallicRoughness.snowEffect.snow_coverage += 0.0006;
-        groundLayer._PBRMaterialParams.pbrMetallicRoughness.snowEffect.snow_coverage += 0.0006;
-      }
-      if (buildingLayer._PBRMaterialParams.pbrMetallicRoughness.snowEffect !== undefined && buildingLayer._PBRMaterialParams.pbrMetallicRoughness.snowEffect.snow_coverage - 1 > 0)
-        clearInterval(intervalValue);
-    }, 30)
+      let intervalValue = setInterval(() => {
+        if (buildingLayer._PBRMaterialParams.pbrMetallicRoughness.snowEffect !== undefined) {
+          buildingLayer._PBRMaterialParams.pbrMetallicRoughness.snowEffect.snow_coverage += 0.0006;
+          groundLayer._PBRMaterialParams.pbrMetallicRoughness.snowEffect.snow_coverage += 0.0006;
+        }
+        if (buildingLayer._PBRMaterialParams.pbrMetallicRoughness.snowEffect !== undefined && buildingLayer._PBRMaterialParams.pbrMetallicRoughness.snowEffect.snow_coverage - 1 > 0)
+          clearInterval(intervalValue);
+      }, 30)
+    }
   }
 }
 </script>

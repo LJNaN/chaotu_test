@@ -1,25 +1,19 @@
 <template>
-  <el-button disabled>位置选择与自定义弹窗(已默认开启)</el-button>
+  <el-button @click="handleToggle">位置选择与自定义弹窗(已{{ toggle ? '开启' : '关闭' }})</el-button>
 </template>
 
 <script setup>
 import Popup from '@/assets/js/bubble/popup.js'
+import { ref } from 'vue'
 
-init()
-function init() {
-  if (GLOBAL.viewer) {
-    handle()
-  } else {
-    setTimeout(() => {
-      init()
-    }, 300)
-  }
-}
+const toggle = ref(false)
 
+
+let handler = null
+let currentPoint = null
+let popups = []
 function handle() {
-  const handler = new Cesium.ScreenSpaceEventHandler(GLOBAL.viewer.scene.canvas);
-
-
+  handler = new Cesium.ScreenSpaceEventHandler(GLOBAL.viewer.scene.canvas);
 
   //设置鼠标左键单击回调事件
   handler.setInputAction(function (e) {
@@ -39,14 +33,16 @@ function handle() {
 
 
     //在点击位置添加对应点
-    GLOBAL.viewer.entities.add(new Cesium.Entity({
+    const point = new Cesium.Entity({
       point: new Cesium.PointGraphics({
         color: new Cesium.Color(0.16, 0.62, 0.75),
         pixelSize: 15,
         outlineColor: new Cesium.Color(1, 1, 1)
       }),
       position: Cesium.Cartesian3.fromDegrees(longitude, latitude, height + 1)
-    }));
+    })
+    GLOBAL.viewer.entities.add(point);
+    currentPoint = point
 
     // 弹窗
     const popup = new Popup({
@@ -64,7 +60,25 @@ function handle() {
     `
     });
     popup.setPosition(position)
+    popups.push(popup)
   }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+}
+
+function handleToggle() {
+  toggle.value = !toggle.value
+
+  if (toggle.value) {
+    handle()
+
+  } else {
+    handler && handler.destroy()
+    popups.forEach(e => {
+      e.destroy()
+    })
+    currentPoint && (currentPoint.show = false)
+
+    popups = []
+  }
 }
 </script>
 
