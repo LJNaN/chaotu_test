@@ -3,6 +3,7 @@
     <div v-show="!GLOBAL.show2D.value" ref="cesiumContainer" style="width: 100%; height: 100%;"></div>
     <div v-show="!GLOBAL.show2D.value" id="popupContainer"></div>
     <div v-show="!GLOBAL.show2D.value" class="btn">
+      <MapSource></MapSource>
       <PrintScreen></PrintScreen>
       <Terrain></Terrain>
       <S3DTile></S3DTile>
@@ -25,6 +26,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import GLOBAL from '@/GLOBAL.js'
+import MapSource from '@/components/MapSource.vue'
 import PrintScreen from '@/components/PrintScreen.vue'
 import Terrain from '@/components/Terrain.vue'
 import S3DTile from '@/components/3DTile.vue'
