@@ -1,6 +1,6 @@
 <template>
-  <el-dropdown style="margin: 0 12px;" split-button>
-    滤镜
+  <el-dropdown style="margin-left: 12px; word-break: keep-all; min-width: 120px;" split-button>
+    <p style="width: 40px;">滤镜</p>
     <template #dropdown>
       <el-dropdown-menu style="width: 400px;overflow: hidden; padding: 12px;">
         <div style="display: flex;"><span style="width: 100px">brightness</span><el-slider v-model="brightness"
